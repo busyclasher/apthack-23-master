@@ -1,15 +1,20 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-const ConnectWalletButton = () => {
+// const ConnectWalletButton = () => {
 
-  return (
-    <>
-      <div className='text-white font-bold text-center text-xl md:ml-30'>
-        <ConnectButton />
-      </div>
-    </>
-  );
+//   return (
+//     <>
+//       <div className='text-white font-bold text-center text-xl md:ml-30'>
+//         <ConnectButton />
+//       </div>
+//     </>
+//   );
     
-}
+// }
 
-export default ConnectWalletButton
+// export default ConnectWalletButton
+const connectwallet = () => {
+  return ( <div></div> );
+}
+ 
+export default connectwallet;

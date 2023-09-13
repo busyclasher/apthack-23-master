@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-import '@rainbow-me/rainbowkit/styles.css';
+// import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider, midnightTheme } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, goerli } from 'wagmi/chains';
@@ -30,7 +30,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'Netsepio',
+  appName: 'DAptrater',
   chains,
 });
 
@@ -55,8 +55,8 @@ root.render(
           modalSize="compact" 
           chains={chains}
           theme={midnightTheme({
-            accentColor: 'rgb(178, 255, 174)',
-            accentColorForeground: 'black',
+            accentColor: '#966CFB',
+            accentColorForeground: 'white',
             borderRadius: 'medium',
             fontStack: 'system',
             overlayBlur: 'small',
@@ -73,3 +73,6 @@ root.render(
     </WagmiConfig>
   </React.StrictMode>
 );
+
+
+

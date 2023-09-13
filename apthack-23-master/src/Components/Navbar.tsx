@@ -1,16 +1,26 @@
-import { useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import {
   Navbar,
   MobileNav,
   Typography,
   IconButton,
 } from "@material-tailwind/react";
+import {WalletSelector} from "@aptos-labs/wallet-adapter-ant-design";
+import "@aptos-labs/wallet-adapter-ant-design/dist/index.css";
+import {AptosClient} from "aptos";
+import {useWallet} from "@aptos-labs/wallet-adapter-react";
 
-import netsepioLogo from '../assets/netsepio.png';
+
+import daptoraterLogo from '../assets/DAptrater.png';
 import LogoutButton from './Logout';
-import ConnectWalletButton from './ConnectWallet';
+// import ConnectWalletButton from './ConnectWallet';
 import {useNavigate} from 'react-router-dom';
  
+export const NETWORK = "testnet";
+// TODO: Load URL from wallet
+export const NODE_URL = `https://fullnode.${NETWORK}.aptoslabs.com`;
+export const client = new AptosClient(NODE_URL);
+
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
  
@@ -22,6 +32,8 @@ export default function Header() {
   }, []);
 
   const navigate = useNavigate();
+
+  const {account, network, connected, signAndSubmitTransaction} = useWallet();
 
   const connectWallet = async () => {
     navigate('/my-reviews');
@@ -39,7 +51,7 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-bold text-lg"
       >
-        <button onClick={connectWallet} className="bg-black z-10 font-bold text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-200 to-green-400">Your Reviews</button>
+        <button onClick={connectWallet} className="bg-black z-10 font-bold text-transparent bg-clip-text leading-12 bg-gradient-to-r from-indigo-200 to-indigo-400">Your Reviews</button>
       </Typography>
       {/*
       <Typography
@@ -48,7 +60,7 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-bold text-lg"
       >
-        <Link to="/" className='bg-black z-10 font-bold text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-200 to-green-400'>
+        <Link to="/" className='bg-black z-10 font-bold text-transparent bg-clip-text leading-12 bg-gradient-to-r from-indigo-200 to-indigo-400'>
           All Reviews
         </Link>
       </Typography>
@@ -57,15 +69,14 @@ export default function Header() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold text-lg font-bold"
-      >
+        className="p-1 text-lg font-bold">
         <LogoutButton/>
       </Typography>
     </ul>
   );
  
   return (
-    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 bg-black border border-green-200">
+    <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 bg-black border border-indigo-200">
       <div className="container mx-auto flex items-center justify-between">
         <Typography
           as="a"
@@ -75,13 +86,13 @@ export default function Header() {
         >
           <div>
             <div className="flex flex-row items-center">
-              <img src={netsepioLogo} alt="netsepio logo" className="h-12 w-12 mr-2"/>
-              <div onClick={navMain} className="text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-200 to-green-400 text-3xl">Netsepio</div>
+              <img src={daptoraterLogo} alt="daptrater logo" className="h-12 w-12 mr-2"/>
+              <div onClick={navMain} className="text-transparent bg-clip-text leading-12 bg-gradient-to-r from-indigo-200 to-indigo-400 text-3xl">DAptorater</div>
             </div>
           </div>
         </Typography>
         
-        <div className="hidden lg:inline-block p-1 md:ml-5"><ConnectWalletButton/></div>
+        <div className="hidden lg:inline-block p-1 md:ml-5"><WalletSelector/></div>
 
         <div className="hidden lg:block">{navList}</div>
 
@@ -127,10 +138,11 @@ export default function Header() {
         <div className="container mx-auto">
           {navList}
           <div className="mx-auto">
-            <ConnectWalletButton/>
+            {/* <ConnectWalletButton/> */}
           </div>
         </div>
       </MobileNav>
     </Navbar>
+    
   );
 }

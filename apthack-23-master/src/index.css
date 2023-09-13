@@ -15,10 +15,10 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: rgb(178, 255, 174);
+    background: rgb(144, 141, 201);
   }
   
-/* Handle */
+/* Handle */    
 ::-webkit-scrollbar-thumb {
     background: black;
 }

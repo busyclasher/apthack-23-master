@@ -14,7 +14,7 @@ const LogoutButton: React.FC = () => {
   return (
     <div
       onClick={handleLogout}
-      className="bg-black z-10 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-200 to-green-400 cursor-pointer hover:bg-gradient-to-r hover:from-red-400 hover:to-red-200"
+      className="bg-black z-10 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-indigo-200 to-indigo-400 cursor-pointer hover:bg-gradient-to-r hover:from-red-400 hover:to-red-200"
     >
       <Link to="/">Logout</Link>
     </div>

@@ -8,6 +8,7 @@ import Loader from '../Components/Loader';
 import FilterButton from '../Components/reviewFilters';
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
+import supabase from "../config/supabaseClient";
 
 
 const AllReviews: React.FC = () => {
@@ -32,25 +33,35 @@ const AllReviews: React.FC = () => {
     fetchReviews().finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    const fetchMetaData = async () => {
-      const metaDataPromises = reviews.map(async (review) => {
-        if (review.metadataURI && review.metadataURI.startsWith('ipfs://')) {
-          const ipfsUrl = `https://ipfs.io/ipfs/${review.metadataURI.split('ipfs://')[1]}`;
-          const metaData = await fetchMetadataFromIPFS(ipfsUrl, review.id);
-          return metaData;
-        }
-        return null;
-      });
-  
-      const metaDataResults = (await Promise.all(metaDataPromises)).filter((result) => result !== null);
-      setMetaDataArray(metaDataResults);
-    };
-  
-    if (reviews.length > 0) {
-      setLoading(true);
-      fetchMetaData().finally(() => setLoading(false));
+  async function fetchFromSupabase() {
+    const { data, error } = await supabase.from("apthacks").select();
+    if(data){
+        setMetaDataArray(data)  
     }
+
+
+  }
+
+  useEffect(() => {
+    fetchFromSupabase()
+    // const fetchMetaData = async () => {
+    //   const metaDataPromises = reviews.map(async (review) => {
+    //     if (review.metadataURI && review.metadataURI.startsWith('ipfs://')) {
+    //       const ipfsUrl = `https://ipfs.io/ipfs/${review.metadataURI.split('ipfs://')[1]}`;
+    //       const metaData = await fetchMetadataFromIPFS(ipfsUrl, review.id);
+    //       return metaData;
+    //     }
+    //     return null;
+    //   });
+  
+    //   const metaDataResults = (await Promise.all(metaDataPromises)).filter((result) => result !== null);
+    //   setMetaDataArray(metaDataResults);
+    // };
+  
+    // if (reviews.length > 0) {
+    //   setLoading(true);
+    //   fetchMetaData().finally(() => setLoading(false));
+    // }
   }, [reviews]);  
 
   const handleFilterChange = async (siteSafety: string) => {
@@ -110,12 +121,12 @@ const AllReviews: React.FC = () => {
             <div className="px-5 mx-auto max-w-7xl">
                 <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
                     <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-100 md:text-6xl md:tracking-tight">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-200 to-green-400">Discover Verified Reviews</span><br/>Empower Your Online Security<br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 to-indigo-400">Discover Verified Reviews</span><br/>Empower Your Online Security on Aptos Blockchain<br/>
                     </h1>
                     <p className="px-0 mb-8 text-lg text-gray-300 md:text-xl lg:px-24">
-                       Dive into a vast collection of authenticated website reviews on NetSepio - your trusted, decentralized platform for finding the perfect tools to bolster your online security.
+                       Dive into a vast collection of authenticated Aptos reviews on DAptoRator - your trusted, decentralized platform for finding the perfect tools to bolster your online security.
                     </p>
-                    <div className='mb-4 space-x-0 md:space-x-2 md:mb-8 inline-flex items-center justify-center w-full font-bold px-6 py-3 mb-2 text-lg text-black bg-green-300 rounded-2xl sm:w-auto sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80'>
+                    <div className='mb-4 space-x-0 md:space-x-2 md:mb-8 inline-flex items-center justify-center w-full font-bold px-6 py-3 mb-2 text-lg text-black bg-indigo-400 rounded-2xl sm:w-auto sm:mb-0 hover:bg-indigo-200 focus:ring focus:ring-indigo-300 focus:ring-opacity-80'>
                       <button onClick={connectWallet}>Your Reviews</button>
                     </div>
                 </div>
